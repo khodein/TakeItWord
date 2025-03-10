@@ -6,7 +6,8 @@ class TextFieldItem {
         val id: String,
         val text: String,
         val label: String,
+        val supportText: String? = null,
         val isSingleLine: Boolean = true,
-        val onChangeValue: (value: String) -> Unit
+        val onChangeValue: (id: String, value: String) -> Unit
     )
 }

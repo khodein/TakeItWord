@@ -11,12 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.take.it.word.learn.game.ui.kit.request.RequestItem
 import ru.take.it.word.learn.game.ui.kit.request.LoadingContent
+import ru.take.it.word.learn.game.ui.kit.request.RequestItem
 import ru.take.it.word.learn.game.ui.theme.Bold_20
 
 @Composable
-fun ButtonContent(
+fun DefaultButtonContent(
     modifier: Modifier,
     state: ButtonItem.State
 ) {

@@ -7,6 +7,7 @@ import ru.take.it.word.learn.game.core.db.databaseModule
 import ru.take.it.word.learn.game.core.navigation.dialog.dialogNavigationModule
 import ru.take.it.word.learn.game.core.navigation.screen.screenNavigationModule
 import ru.take.it.word.learn.game.repositories.word.wordRepositoryModule
+import ru.take.it.word.learn.game.tools.toolsModule
 
 class App : Application() {
 
@@ -19,6 +20,7 @@ class App : Application() {
                 dialogNavigationModule,
                 databaseModule,
                 wordRepositoryModule,
+                toolsModule,
             )
         }
     }

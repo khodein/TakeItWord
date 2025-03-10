@@ -7,6 +7,7 @@ import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import ru.take.it.word.learn.game.ui.kit.button.ButtonItem
+import ru.take.it.word.learn.game.ui.kit.button_icon.ButtonIconItem
 import ru.take.it.word.learn.game.ui.kit.field.TextFieldItem
 
 class DefaultWordCreatorComponent(
@@ -20,6 +21,11 @@ class DefaultWordCreatorComponent(
     }
 
     override val wordValue: Value<TextFieldItem.State> by handler::wordValue
-    override val translateValue: Value<TextFieldItem.State> by handler::translateValue
-    override val saveValue: Value<ButtonItem.State> by handler::saveValue
+    override val translateValue: Value<List<TextFieldItem.State>> by handler::translateValue
+    override val saveValue: Value<ButtonItem.Default> by handler::saveValue
+    override val addTranslateValue: Value<ButtonIconItem.State> by handler::addTranslateValue
+
+    override fun onClickRemove(id: String) {
+        handler.onClickRemoveTranslate(id)
+    }
 }

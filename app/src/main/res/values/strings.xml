@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TakeItWord</string>
+
+    <string name="create_word_title">Новое слово 😊</string>
+    <string name="create_word_bottom_notice">Введите слово на английском и перевод\nне переживайте вы всегда сможете его отредактировать</string>
+    <string name="create_word_button_save">Сохранить</string>
+    <string name="create_word_support">При нажатии на Сохранить, поле автоматически отредактируется</string>
+    <string name="create_word_label">Слово</string>
+    <string name="create_word_translate_label">Перевод</string>
+    <string name="create_word_translate_label_more">Дополнительный перевод</string>
+    <string name="create_word_translate_support_text_first">Можно записать как угодно</string>
+    <string name="create_word_translate_support_text_last">Максимальное кол-ов доп. переводов 4</string>
 </resources>
