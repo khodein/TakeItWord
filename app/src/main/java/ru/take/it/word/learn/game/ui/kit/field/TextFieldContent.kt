@@ -51,6 +51,8 @@ fun TextFieldContent(
 
     var isFocusChange by remember { mutableStateOf(false) }
 
+    isFocusChange = state.isFocus
+
     OutlinedTextField(
         modifier = modifier
             .focusRequester(focusRequester)
@@ -58,8 +60,10 @@ fun TextFieldContent(
                 isFocusChange = it.hasFocus
             },
         shape = RoundedCornerShape(CornerSize(16.dp)),
+        keyboardActions = state.keyboardActions,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
+            imeAction = state.imeAction,
             showKeyboardOnFocus = true
         ),
         supportingText = {

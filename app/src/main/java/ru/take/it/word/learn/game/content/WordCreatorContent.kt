@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import ru.take.it.word.learn.game.R
-import ru.take.it.word.learn.game.componen_new_word.WordCreatorComponent
+import ru.take.it.word.learn.game.component_creator_word.WordCreatorComponent
 import ru.take.it.word.learn.game.ui.kit.button.DefaultButtonContent
 import ru.take.it.word.learn.game.ui.kit.button_icon.ButtonIconContent
 import ru.take.it.word.learn.game.ui.kit.button_icon.ButtonIconItem
@@ -42,7 +42,10 @@ fun WordCreatorContent(
     onDismiss: () -> Unit,
     component: WordCreatorComponent,
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
 
     ModalBottomSheet(
         modifier = modifier
@@ -111,18 +114,22 @@ fun WordCreatorContent(
                                 .weight(1f)
                                 .align(Alignment.CenterVertically)
                                 .padding(end = 8.dp),
-                            state = state
+                            state = state,
                         )
 
                         when {
                             index == 0 && size < 5 -> {
-                                val addTranslateValueFlow by component.addTranslateValue.subscribeAsState()
+                                val buttonIconState = ButtonIconItem.State(
+                                    id = "add_translate_id",
+                                    icon = R.drawable.ic_plus,
+                                    onClick = component::onClickAdd
+                                )
 
                                 ButtonIconContent(
                                     modifier = Modifier
                                         .align(Alignment.CenterVertically)
                                         .padding(bottom = 12.dp),
-                                    state = addTranslateValueFlow
+                                    state = buttonIconState
                                 )
                             }
 
@@ -153,14 +160,17 @@ fun WordCreatorContent(
                     .fillMaxWidth()
                     .wrapContentHeight()
             ) {
+
+                val message by component.messageTopButtonValue.subscribeAsState()
+
                 Text(
                     style = Regular_10,
-                    color = Color.Gray,
+                    color = if (message.isError) Color.Red else Color.Gray,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 5.dp)
                         .padding(horizontal = 20.dp),
-                    text = stringResource(R.string.create_word_bottom_notice),
+                    text = message.message,
                     textAlign = TextAlign.Center
                 )
 

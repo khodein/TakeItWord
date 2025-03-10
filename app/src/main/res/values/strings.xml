@@ -10,4 +10,9 @@
     <string name="create_word_translate_label_more">Дополнительный перевод</string>
     <string name="create_word_translate_support_text_first">Можно записать как угодно</string>
     <string name="create_word_translate_support_text_last">Максимальное кол-ов доп. переводов 4</string>
+    <string name="create_word_translate_error">Произошла ошибка! Попробуйте еще раз</string>
+
+    <string name="list_word_error">Произошла ошибка!</string>
+    <string name="list_word_title">Твои слова 😎</string>
+    <string name="list_word_empty">Нажмите на плюсик\nв верхнем правом углу</string>
 </resources>

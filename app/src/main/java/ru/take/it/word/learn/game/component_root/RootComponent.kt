@@ -4,7 +4,7 @@ import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
-import ru.take.it.word.learn.game.componen_new_word.WordCreatorComponent
+import ru.take.it.word.learn.game.component_creator_word.WordCreatorComponent
 import ru.take.it.word.learn.game.component_list_words.ListWordsComponent
 
 interface RootComponent : BackHandlerOwner {

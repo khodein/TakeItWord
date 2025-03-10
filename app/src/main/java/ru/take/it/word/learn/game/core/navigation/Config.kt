@@ -1,6 +1,7 @@
 package ru.take.it.word.learn.game.core.navigation
 
 import kotlinx.serialization.Serializable
+import ru.take.it.word.learn.game.component_creator_word.WordCreatorComponent
 
 @Serializable
 sealed class ScreenNavigationConfig {
@@ -13,5 +14,7 @@ sealed class ScreenNavigationConfig {
 sealed class DialogNavigationConfig {
 
     @Serializable
-    data object NewWord: DialogNavigationConfig()
+    data class NewWord(
+        val provider: WordCreatorComponent.Provider
+    ) : DialogNavigationConfig()
 }

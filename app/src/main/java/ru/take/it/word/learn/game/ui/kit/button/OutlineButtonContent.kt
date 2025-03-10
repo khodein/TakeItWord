@@ -6,14 +6,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ru.take.it.word.learn.game.ui.kit.request.LoadingContent
 import ru.take.it.word.learn.game.ui.kit.request.RequestItem
-import ru.take.it.word.learn.game.ui.theme.Bold_20
 
 @Composable
 fun OutlineButtonContent(
@@ -37,18 +35,20 @@ fun OutlineButtonContent(
         },
         content = {
             when (val requestState = state.requestState) {
-                is RequestItem.State.Idle -> {
-                    Text(
+                is RequestItem.State.Idle,
+                is RequestItem.State.Error,
+                is RequestItem.State.Success -> {
+                    ButtonTextContent(
                         modifier = Modifier.align(Alignment.CenterVertically),
-                        text = state.value,
-                        style = Bold_20,
-                        color = MaterialTheme.colorScheme.onPrimary
+                        text = state.value
                     )
                 }
 
                 is RequestItem.State.Loading -> {
                     LoadingContent(state = requestState)
                 }
+
+                else -> Unit
             }
         }
     )

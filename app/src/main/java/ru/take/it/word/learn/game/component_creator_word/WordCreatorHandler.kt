@@ -1,4 +1,4 @@
-package ru.take.it.word.learn.game.componen_new_word
+package ru.take.it.word.learn.game.component_creator_word
 
 import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.value.MutableValue
@@ -17,11 +17,11 @@ import ru.take.it.word.learn.game.repositories.word.WordModel
 import ru.take.it.word.learn.game.repositories.word.WordRepository
 import ru.take.it.word.learn.game.tools.ResManager
 import ru.take.it.word.learn.game.ui.kit.button.ButtonItem
-import ru.take.it.word.learn.game.ui.kit.button_icon.ButtonIconItem
 import ru.take.it.word.learn.game.ui.kit.field.TextFieldItem
 import ru.take.it.word.learn.game.ui.kit.request.RequestItem
 
 class WordCreatorHandler(
+    private val provider: WordCreatorComponent.Provider,
     private val scope: CoroutineScope,
 ) : InstanceKeeper.Instance, KoinComponent {
 
@@ -66,21 +66,30 @@ class WordCreatorHandler(
         )
     )
 
-    val addTranslateValue: MutableValue<ButtonIconItem.State> = MutableValue(
-        ButtonIconItem.State(
-            id = "add_translate_id",
-            icon = R.drawable.ic_plus,
-            onClick = ::onClickAddTranslate
-        )
+    private val messageIdleValue = WordCreatorComponent.Message(
+        isError = false,
+        message = resManager.getString(R.string.create_word_bottom_notice)
     )
+
+    val messageTopButtonValue: MutableValue<WordCreatorComponent.Message> =
+        MutableValue(messageIdleValue)
 
     private val requestStateSubscriber = requestState.subscribe { state ->
         saveValue.value = saveValue.value.copy(requestState = state)
+        messageTopButtonValue.value = when (state) {
+            is RequestItem.State.Error -> messageIdleValue.copy(
+                isError = true,
+                message = state.message.orEmpty()
+            )
+
+            else -> messageIdleValue
+        }
     }
 
     private fun onChangeWord(id: String, value: String) {
         wordValue.value = wordValue.value.copy(text = value)
         saveValue.value = saveValue.value.copy(isEnabled = isSaveButtonEnabled(wordText = value))
+        requestState.value = RequestItem.State.Idle
     }
 
     private fun onChangeTranslate(id: String, value: String) {
@@ -97,6 +106,7 @@ class WordCreatorHandler(
             saveValue.value =
                 saveValue.value.copy(isEnabled = isSaveButtonEnabled(translateText = value))
         }
+        requestState.value = RequestItem.State.Idle
     }
 
     fun onClickRemoveTranslate(id: String) {
@@ -115,16 +125,15 @@ class WordCreatorHandler(
         }
     }
 
-    private fun onClickAddTranslate() {
-        if (translateValue.value.size == 5) {
-            return
-        }
+    fun onClickAddTranslate() {
         translateValue.value = translateValue.value.toMutableList().apply {
-            val index = translateValue.value.lastIndex + 1
+            if (size == MAX_TRANSLATE_COUNT) {
+                return
+            }
 
             add(
                 TextFieldItem.State(
-                    id = "$TRANSLATE_ID${index}",
+                    id = "$TRANSLATE_ID${lastIndex + 1}",
                     text = "",
                     supportText = null,
                     label = resManager.getString(R.string.create_word_translate_label_more),
@@ -132,7 +141,7 @@ class WordCreatorHandler(
                 )
             )
 
-            if (size == 5) {
+            if (size == MAX_TRANSLATE_COUNT) {
                 val item = get(lastIndex)
                 set(lastIndex, item.copy(supportText = translateSupportTextLast))
             }
@@ -165,10 +174,13 @@ class WordCreatorHandler(
                     )
                 }
             }.onSuccess {
-                requestState.value = RequestItem.State.Idle
+                requestState.value = RequestItem.State.Success
+                provider.onAddNewWord()
                 dialogNavigation.dismiss()
             }.onFailure {
-
+                requestState.value = RequestItem.State.Error(
+                    message = resManager.getString(R.string.create_word_translate_error)
+                )
             }
         }
     }
@@ -182,5 +194,6 @@ class WordCreatorHandler(
     private companion object {
         const val TRANSLATE_ID = "translate_id"
         const val MAIN_TRANSLATE_ID = "${TRANSLATE_ID}${0}"
+        const val MAX_TRANSLATE_COUNT = 5
     }
 }

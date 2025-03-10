@@ -1,6 +1,7 @@
 package ru.take.it.word.learn.game.ui.kit.word
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ru.take.it.word.learn.game.ui.theme.Regular_10
 import ru.take.it.word.learn.game.ui.theme.Regular_16
@@ -41,6 +43,7 @@ fun WordContent(
             .clickable {
                 state.onClickItem?.invoke()
             }
+            .background(Color.White)
             .padding(vertical = 6.dp)
 
     ) {
@@ -52,6 +55,7 @@ fun WordContent(
             Text(
                 modifier = Modifier.padding(bottom = 4.dp),
                 text = state.wordTranslate,
+                overflow = TextOverflow.Ellipsis,
                 style = Regular_10,
                 maxLines = 1,
                 color = Color.Gray,
@@ -60,6 +64,7 @@ fun WordContent(
                 modifier = Modifier,
                 text = state.wordText,
                 style = Regular_16,
+                overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 color = Color.Black
             )

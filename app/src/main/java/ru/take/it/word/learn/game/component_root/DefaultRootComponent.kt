@@ -8,12 +8,12 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import ru.take.it.word.learn.game.componen_new_word.DefaultWordCreatorComponent
+import ru.take.it.word.learn.game.component_creator_word.DefaultWordCreatorComponent
 import ru.take.it.word.learn.game.component_list_words.DefaultListWordsComponent
 import ru.take.it.word.learn.game.core.navigation.DialogNavigationConfig
-import ru.take.it.word.learn.game.core.navigation.screen.ScreenNavigation
 import ru.take.it.word.learn.game.core.navigation.ScreenNavigationConfig
 import ru.take.it.word.learn.game.core.navigation.dialog.DialogNavigation
+import ru.take.it.word.learn.game.core.navigation.screen.ScreenNavigation
 
 class DefaultRootComponent(
     componentContext: ComponentContext
@@ -73,6 +73,7 @@ class DefaultRootComponent(
             is DialogNavigationConfig.NewWord -> {
                 RootComponent.SlotChildComponent.WordCreatorChild(
                     DefaultWordCreatorComponent(
+                        provider = config.provider,
                         componentContext = componentContext,
                     )
                 )

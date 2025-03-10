@@ -1,9 +1,14 @@
 package ru.take.it.word.learn.game.ui.kit.button
 
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ru.take.it.word.learn.game.ui.kit.request.RequestItem
+import ru.take.it.word.learn.game.ui.theme.Bold_20
 
 class ButtonItem {
 
@@ -34,4 +39,17 @@ class ButtonItem {
         override val isEnabled: Boolean = true,
         override val onClick: (() -> Unit)? = null,
     ) : State
+}
+
+@Composable
+fun ButtonTextContent(
+    modifier: Modifier,
+    text: String
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        style = Bold_20,
+        color = MaterialTheme.colorScheme.onPrimary
+    )
 }
